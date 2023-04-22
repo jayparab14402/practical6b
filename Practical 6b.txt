@@ -1,0 +1,143 @@
+
+
+--activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="4dp"
+    tools:context=".MainActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tootBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>
+
+
+
+--MainActivity.kt
+
+
+
+
+import android.graphics.Color
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+class MainActivity : AppCompatActivity() {
+    lateinit var toolBar: Toolbar
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        title = "KotlinApp"
+        toolBar = findViewById(R.id.tootBar)
+        toolBar.title = "MyToolBar"
+        toolBar.setTitleTextColor(Color.WHITE)
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.option1 -> {
+                Toast.makeText(
+                    applicationContext, "Bluetooth Option Selected",
+                    Toast.LENGTH_SHORT
+                ).show()
+                true
+            }
+            R.id.option2 -> {
+                Toast.makeText(applicationContext, "Call Option Selected",
+                    Toast.LENGTH_SHORT)
+                    .show()
+                true
+            }
+            R.id.option3 -> {
+                Toast.makeText(applicationContext, "About Option Selected",
+                    Toast.LENGTH_SHORT)
+                    .show()
+                true
+            }
+            R.id.option4 -> {
+                Toast.makeText(applicationContext, "Chat Option Selected",
+                    Toast.LENGTH_SHORT)
+                    .show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        invalidateOptionsMenu()
+        menu.findItem(R.id.option2).isVisible = false
+        menu.findItem(R.id.option4).isVisible = true
+        return super.onPrepareOptionsMenu(menu)
+    }
+}
+
+
+
+--menu.xml
+
+//Right click on res -> New -> Android Resource file 
+//Give the file name menu and Resource type menu
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/option1"
+//To download icon Right click on drawable ->New ->Vector Assest ->Search bluetooth icon and select it
+//Give the name ic_baseline_bluetooth_24
+        android:icon="@drawable/ic_baseline_bluetooth_24" 
+        android:orderInCategory="1"
+        android:title="bluetooth"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/option2"
+        android:orderInCategory="2"
+        android:title="call"
+        android:icon="@drawable/ic_baseline_add_ic_call_24"
+        app:showAsAction="ifRoom|collapseActionView" />
+    <item android:id="@+id/option4"
+        android:title="chat"
+        android:visible="false"
+        android:orderInCategory="3"
+        android:icon="@drawable/ic_baseline_chat_24"
+        app:showAsAction="ifRoom|collapseActionView"/>
+    <item
+        android:id="@+id/option3"
+        android:title="about"
+        app:showAsAction="never" />
+</menu>
+
+
+
+--string.xml
+
+<resources>
+    <string name="app_name">Menu</string>
+    <string name="choose_item">Choose Item</string>
+    <string name="click_popup">Click Popup</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="about">About</string>
+    <string name="chat">Chat</string>
+    <string name="call">Call</string>
+</resources>
+
+
+
+--android manifest.xml
+
+android:roundIcon="@mipmap/ic_launcher_round"
